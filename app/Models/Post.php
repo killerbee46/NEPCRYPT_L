@@ -12,7 +12,9 @@ class Post extends Model
      [
         'title',
         'body',
-        'profile_pic'
+        'image',
+        'user_id',
+        'user_name'
     ];
     protected $guarded = ['role_id'];
 

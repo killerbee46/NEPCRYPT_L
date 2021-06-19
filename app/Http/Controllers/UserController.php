@@ -95,11 +95,11 @@ class UserController extends Controller
                     $image = $request->file('profile_pic');
                     $imgExt = $image->getClientOriginalExtension();
                     $fullname = time().".".$imgExt;
-                    $result = $image->storeAs('images',$fullname);
+                    $result = $image->storeAs('images/users',$fullname);
 
             }
             else{
-                $fullname = "default.png";
+                $fullname = "image.png";
             }
 
             $user->profile_pic = $fullname;
@@ -149,14 +149,11 @@ class UserController extends Controller
 
     public function deleteUser($id)
     {
-        $user = User::findOrFail($id);
-        $user->status = 3;
-        $result = $user->save();
-
-        $data= User::orderBy('id','desc')->where('status','<=',1)->get();
-        if ($result) {
-        	return view('admin.user.userview',compact('data'));
-        }
+        $user = User::find($id);
+       if($user->delete()){
+           return redirect('admin/users')->with('status', 'User deleted successfully');
+       }
+       else return redirect('admin/users/')->with('status', 'There was an error');
     }
 
     public function searchuserForAdmin(Request $request){

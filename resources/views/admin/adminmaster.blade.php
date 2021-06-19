@@ -41,15 +41,28 @@
 
 </head>
 <body>
+  <div class="row" style="padding-left:40px;padding-top: 20px;background-color: rgba(24, 24, 24, 0.589);">
+    <nav>
+      <ul class="menu" style="width:97vw;display: flex;justify-content: space-between;">
+        <li><div><a href="{{ url('/admin') }}"><h3 style="color: rgb(224, 224, 224);">DASHBOARD</h3></a></div></li>
+        <li>
+          <div class="dropdown">
+            <button class="btn dropdown-toggle" style="color: aliceblue;background-color: black;" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <img src="{{asset('/images/users/image.png')}}" height="30px" width="30px" style="border-radius: 50%;border: 1px solid rgb(92, 92, 92);overflow: hidden;margin-right: 10px;">User Name
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="{{ url('/admin/profile') }}">Profile</a>
+              <a class="dropdown-item" href="{{ url('/logout') }}">Logout</a>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </div>
 
 <div class="row">
-  <div class="col-md-2" style="padding-right:0 ;">
-    <div class="nav"  style="background-color: rgb(48, 47, 47);display: flex;flex-direction: column;color: aliceblue;height: 100vh;width: 100%;">
-      <li class="navbar-brand">
-        <a href="{{ url('/admin') }}">
-          Admin Control
-        </a> 
-      </li>
+  <div class="col-md-2" style="padding-right: 0;">
+    <div class="nav"  style="padding-left:30px ;background-color: rgb(48, 47, 47);display: flex;flex-direction: column;color: aliceblue;height: 88.1vh;width: 100%;">
       <li class="nav-item">
         <a href="{{ url('/admin/users') }}">
          Users
@@ -58,13 +71,23 @@
       
       <li class="nav-item">
         <a href="{{ url('/admin/post') }}">
-          Posts
+         Post
       </a>
       </li>
+      
+      <li class="nav-item">
+        <a href="{{ url('/admin/profile') }}">
+          User Profile
+      </a>
+      </li>
+      <li>
+        <a href="{{url('/')}}">
+          <button class="btn btn-primary" >Back To Site</button>
+        </a>
+      </li>
     </div>
-    <a href="{{url('/')}}">
-      <button class="btn btn-primary" style="position:absolute;margin:auto; bottom:2px; left:2px; right:2px;">Back To Site</button>
-    </a>
+
+    
   </div>
   <div class="col-md-10" style="padding: 30px;background-color: black;">
     @yield('content')

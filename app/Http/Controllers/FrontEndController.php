@@ -13,7 +13,10 @@ use Illuminate\Support\Facades\Auth;
 class FrontEndController extends Controller
 {
     public function index(Request $request){
-        return view('frontend.home');
+
+        $post= Post::orderBy('id','desc')->get();
+        $postcount = count($post);
+        return view('frontend.home',compact('postcount'));
 	 
        }
    
@@ -42,7 +45,12 @@ class FrontEndController extends Controller
 	 
        }
     public function encrypt(Request $request){
-        return view('frontend.encrypt');
+        if(Auth::user()){
+            return view('frontend.encrypt');
+        }
+        else{
+            return redirect('/login');
+        }
 	 
        }
        public function decrypt(Request $request){
@@ -106,14 +114,14 @@ class FrontEndController extends Controller
         $request->validate([
             'title' => 'required',
             'body' => 'required',
-            'profile_pic'=>'required'
+            'image'=>'required'
         ]);
 
-        if ($file = $request->file('profile_pic')) {
+        if ($file = $request->file('image')) {
         $request->validate([
-            'profile_pic' =>'mimes:jpg,jpeg,png,bmp'
+            'image' =>'mimes:jpg,jpeg,png,bmp'
         ]);
-        $image = $request->file('profile_pic');
+        $image = $request->file('image');
         $imgExt = $image->getClientOriginalExtension();
         $fullname = time().".".$imgExt;
         $result = $image->storeAs('images/posts',$fullname);
@@ -128,17 +136,20 @@ class FrontEndController extends Controller
         $post = new Post();
         $post->title = $request->title;
         $post->body = $request->body;
-        $post->profile_pic = $fullname;
+        $post->image = $fullname;
+        $post->user_id = Auth::user()->id;
+        $post->user_name = Auth::user()->name;
         $post->save();
 
 
         if($post){
             //Redirect with Flash message
-            return redirect('/post')->with('status', 'Post added Successfully!');
+            return redirect('post/')->with('status', 'Post added Successfully!');
         }
         else{
-            return redirect('/post')->with('status', 'There was an error!');
+            return redirect('post/')->with('status', 'There was an error!');
         }
+
 
     }
 

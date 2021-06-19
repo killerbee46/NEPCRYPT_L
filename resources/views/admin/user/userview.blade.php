@@ -1,60 +1,55 @@
-@extends('admin.adminmaster')
+@extends('admin.master')
 @section('content')
-<div class="container">
-        @if (session('error'))
-            <div class="alert alert-danger">
-                {{ session('errors') }}
+@if (session('status'))
+    <div class="alert alert-success">
+        {{ session('status') }}
+    </div>
+@endif
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="white-box">
+                            <h3 class="box-title">Registred Users</h3>
+                            <div class="table-responsive">
+                                <table class="table text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th class="border-top-0">ID</th>
+                                            <th class="border-top-0">Name</th>
+                                            <th class="border-top-0">Email</th>
+                                            <th class="border-top-0">Role</th>
+                                            <th colspan="3" class="border-top-0">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($data as $post )
+                                        <tr>
+                                            <td>{{$post->id}}</td>
+                                            <td>{{$post->name}}</td>
+                                            <td>{{$post->email}}</td>
+                                            <td><?php if($post['role']=='3'){echo "Admin";} else if($post['role']=="2") {echo "Blogger";} else {echo "User";}?></td>
+                                            <td style="width: 40px;"><a href="/userstable/{{$post->id}}/edit"><button class="btn btn-info">Edit</button></a></td>
+                                            <form method="POST" action="/userstable/{{$post->id}}">
+                                                @csrf
+                                                @method('delete')
+                                                <td><input class="btn btn-danger" type="submit" value="Delete"></td>
+                                                </form>
+                                        </tr>
+                                       @endforeach
+                                    </tbody>
+                                </table>
+                                <a href="/userstable/create" class="btn btn-primary" >Create User</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+           
             </div>
-        @endif
-
-        @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
-
-        <form style="float: right;" method="POST" 
-          action="{{url('admin/users/search-user/')}}" >
-              @csrf
-                  <input class="input is-normal" type="text" placeholder="Search Usersp" style="width: 300px; " name="searched">
-                  <button class="btn btn-primary" >Search</button>
-
-        </form>
-        <div class="buttons" style="float: right;">
-
-            <a href="{{url('admin/users/add-user')}}" style="margin-right: 3px;" class="button is-primary">Add User</a>
-
+          
         </div>
-         <h2 style="color: chartreuse;">Users</h2>
-
-
-         <table border="1px" class="table">
-             <tr>
-                 <th>Name</th>
-                 <th>Email</th>
-                 <th>Action</th>
-
-             </tr>
-
-             @foreach($data as $user)
-                <tr>
-                    <td>{{$user->name}}</td>
-                    <td>{{$user->email}}</td>
-                    <td>
-                        
-                        <form method="post" action="{{url('admin/users/delete-user/'.$user->id)}}"  >
-                            <a href="{{url('admin/users/edit-user/'.$user->id)}}" class="btn btn-primary">Edit </a>
-                            @csrf
-                            <button class="btn btn-danger" >Delete </button>
-                        </form>
-
-                    </td>
-                   
-                </tr>
-             @endforeach
-
-
-         </table>
-        <!--  <p>Red background </p> -->
-</div>
- @stop
+        
+    </div>
+   @endsection

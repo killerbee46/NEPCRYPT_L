@@ -29,11 +29,6 @@ Route::get('/crypto', [FrontendController::class, 'encrypt']);
 Route::get('/crypto/encrypt', [FrontendController::class, 'encrypt']);
 Route::get('/crypto/decrypt', [FrontendController::class, 'decrypt']);
 
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
 require __DIR__.'/auth.php';
 
 // Route::get('/user',[UserController::class, 'index']);
@@ -41,6 +36,17 @@ require __DIR__.'/auth.php';
  Route::group(['prefix'=>'admin','middleware'=>'auth'],function (){
     Route::get('/', function () {
         return view('admin.home');
+    });
+    Route::group(['prefix'=>'profile','middleware'=>'auth'],function (){
+
+        Route::get('/',
+        function ()
+        {
+            return view('admin.profile');
+        }
+    );
+
+
     });
         
         Route::group(['prefix'=>'users','middleware'=>'auth'],function (){
@@ -57,7 +63,7 @@ require __DIR__.'/auth.php';
         });
         Route::group(['prefix'=>'post','middleware'=>'auth'],function (){
 
-    	    Route::get('/',[PostController::class, 'index']);
+    	    Route::get('/',[PostController::class, 'index']); 
     	    Route::post('/updatepostinfo/{id}',[PostController::class, 'UpdatePost']);
     	    Route::get('/add-post',[PostController::class, 'addPost']);
             Route::post('/search-post',[PostController::class, 'searchPostForAdmin']);

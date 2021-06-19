@@ -20,7 +20,7 @@ class Blogger
             return $next($request);
         }
         else{
-            return redirect('/');
+            return redirect('/post');
         }
     }
 }

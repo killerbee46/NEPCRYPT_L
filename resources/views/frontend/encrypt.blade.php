@@ -1,7 +1,15 @@
 @extends('frontend.encro')
 @section('crypto')
 
-
+<script>
+    function encrypt(){
+        var ptext = document.getElementById('plain').value;
+        var CryptoJS = require("crypto-js");
+        // Encrypt
+        var enc = CryptoJS.AES.encrypt(ptext, "key46").toString();
+        document.getElementById('encoded').value = enc;
+    }
+</script>
 <div class="encrypt" style="text-align: center; padding-top: 10px;">
     <div style="background-color: black;color: chartreuse; font-size: 1.5em;margin-left: 5%;margin-right: 5%;">
         Enter your messages here...

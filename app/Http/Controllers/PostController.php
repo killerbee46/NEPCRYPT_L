@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -51,14 +52,14 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required',
             'body' => 'required',
-            'profile_pic'=>'required'
+            'image'=>'required'
         ]);
 
-        if ($file = $request->file('profile_pic')) {
+        if ($file = $request->file('image')) {
         $request->validate([
-            'profile_pic' =>'mimes:jpg,jpeg,png,bmp'
+            'image' =>'mimes:jpg,jpeg,png,bmp'
         ]);
-        $image = $request->file('profile_pic');
+        $image = $request->file('image');
         $imgExt = $image->getClientOriginalExtension();
         $fullname = time().".".$imgExt;
         $result = $image->storeAs('images/posts',$fullname);
@@ -73,7 +74,9 @@ class PostController extends Controller
         $post = new Post();
         $post->title = $request->title;
         $post->body = $request->body;
-        $post->profile_pic = $fullname;
+        $post->image = $fullname;
+        $post->user_id = Auth::user()->id;
+        $post->user_name = Auth::user()->name;
         $post->save();
 
 
@@ -82,7 +85,7 @@ class PostController extends Controller
             return redirect('admin/post/')->with('status', 'Post added Successfully!');
         }
         else{
-            return redirect('admin/post/')->with('status', 'There was an error!');
+            return redirect('admin/post/add-post')->with('status', 'There was an error!');
         }
 
     }
@@ -122,14 +125,16 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function updatePost(Request $request, $id)
+    public function updatePost(Request $request, $id) 
     {
         //Update
         $posts = Post::find($id)->first();
 
         $posts->title = $request->title;
         $posts->body = $request->body;
-        $posts->profile_pic = $request->profile_pic;
+        $posts->image = $request->image;
+        $posts->user_id = $request->user_id;
+        $posts->user_name = $request -> user_name;
 
         if($posts->save()){
             return redirect('admin/post')->with('status', 'Post edited Successfully!');
@@ -149,14 +154,11 @@ class PostController extends Controller
      */
     public function deletePost($id)
     {
-        $user = User::findOrFail($id);
-        $user->status = 3;
-        $result = $user->save();
-
-        $posts= Post::orderBy('id','desc')->where('status','<=',1)->get();
-        if ($result) {
-        	return view('admin.user.postview',compact('posts'));
+        $post = Post::find($id);
+        if($post->delete()){
+            return redirect('admin/post')->with('status', 'Post deleted successfully');
         }
+        else return redirect('admin/post')->with('status', 'There was an error');
         
     }
     public function searchPostForAdmin(Request $request){

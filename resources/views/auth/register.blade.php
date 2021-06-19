@@ -40,24 +40,20 @@
                                 type="password"
                                 name="password_confirmation" required />
             </div>
-            <div class="mt-4">
-                <x-label for="mobile" :value="__('Mobile')" />
+            <!-- <div class="mt-4">
+                <x-label for="mobile" :value="__('Mobile')" name='mobile' />
 
                 <x-input id="mobile" class="block mt-1 w-full" type="text" name="mobile" :value="old('mobile')" required />
             </div>
             <div class="input-group mt-4">
                 <div class="custom-file">
                   <input type="file" class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" name="profile_pic">
-                  <label class="custom-file-label custom-file" for="inputGroupFile04">Choose file</label>
+                  <label class="custom-file-label custom-file" for="inputGroupFile04" name='profile_pic'>Choose file</label>
                 </div>
               </div>
               <div class="field mt-4">
                 <div class="control">
                 <label >Role:</label>
-                <label class="radio">
-                  <input type="radio" name="role" value="3">
-                  Admin
-                </label>
                   <label class="radio">
                     <input type="radio" name="role" value="2">
                     Blogger
@@ -67,7 +63,7 @@
                     Normal User
                   </label>
                 </div>
-              </div>
+              </div> -->
 
             <div class="flex items-center justify-end mt-4">
                 <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">

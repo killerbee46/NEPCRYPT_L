@@ -1,4 +1,4 @@
-@extends('admin.adminmaster')
+@extends('admin.adminmaster') 
 @section('content')
 <div class="container">
     @if (session('error'))
