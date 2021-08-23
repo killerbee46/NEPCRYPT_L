@@ -1,6 +1,7 @@
 @extends('frontend.encro')
 @section('crypto')
 
+<script src="aes.js"></script>
 <script>
     function encrypt(){
         var ptext = document.getElementById('plain').value;

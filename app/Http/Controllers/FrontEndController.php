@@ -16,7 +16,7 @@ class FrontEndController extends Controller
 
         $post= Post::orderBy('id','desc')->get();
         $postcount = count($post);
-        return view('frontend.home',compact('postcount'));
+        return view('frontend.home',compact('post'));
 	 
        }
    

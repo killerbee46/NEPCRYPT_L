@@ -127,6 +127,25 @@ class PostController extends Controller
      */
     public function updatePost(Request $request, $id) 
     {
+        $request->validate([
+            'title' => 'required',
+            'body' => 'required',
+            'image'=>'required'
+        ]);
+
+        if ($file = $request->file('image')) {
+        $request->validate([
+            'image' =>'mimes:jpg,jpeg,png,bmp'
+        ]);
+        $image = $request->file('image');
+        $imgExt = $image->getClientOriginalExtension();
+        $fullname = time().".".$imgExt;
+        $result = $image->storeAs('images/posts',$fullname);
+        }
+
+        else{
+            $fullname = $posts->image;
+        }
         //Update
         $posts = Post::find($id)->first();
 

@@ -33,7 +33,7 @@ require __DIR__.'/auth.php';
 
 // Route::get('/user',[UserController::class, 'index']);
 
- Route::group(['prefix'=>'admin','middleware'=>'auth'],function (){
+ Route::group(['prefix'=>'admin','middleware'=>'admin'],function (){
     Route::get('/', function () {
         return view('admin.home');
     });
@@ -61,7 +61,7 @@ require __DIR__.'/auth.php';
             Route::post('/delete-user/{id}',[UserController::class, 'deleteUser']);
 
         });
-        Route::group(['prefix'=>'post','middleware'=>'auth'],function (){
+        Route::group(['prefix'=>'posts','middleware'=>'auth'],function (){
 
     	    Route::get('/',[PostController::class, 'index']); 
     	    Route::post('/updatepostinfo/{id}',[PostController::class, 'UpdatePost']);
