@@ -2,13 +2,12 @@
 @section('crypto')
 
 <script src="aes.js"></script>
-<script>
+<script> 
     function encrypt(){
         var ptext = document.getElementById('plain').value;
-        var CryptoJS = require("crypto-js");
         // Encrypt
-        var enc = CryptoJS.AES.encrypt(ptext, "key46").toString();
-        document.getElementById('encoded').value = enc;
+        var ciphertext = CryptoJS.AES.encrypt(ptext, 1234);
+        document.getElementById('encoded').value = ciphertext;
     }
 </script>
 <div class="encrypt" style="text-align: center; padding-top: 10px;">
