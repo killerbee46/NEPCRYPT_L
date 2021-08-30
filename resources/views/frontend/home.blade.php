@@ -3,42 +3,85 @@
 @section('body')
 
 <div style="margin-top:-20px">
-  <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-ride="carousel">
-    {{-- <ol class="carousel-indicators">
-      <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-      <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-    </ol> --}}
-    <div class="carousel-inner" role="listbox">
-      <!-- Slide One - Set the background image for this slide in the line below -->
-      <div class="carousel-item active" style="height:250px;width:100%">
-        <img style="width: 100%;height:100%" src="{{asset('/images/bg.png')}}">
-        <div class="carousel-caption d-none d-md-block ">
-          <!-- {{-- <h3 class="display-4">HamroTanker</h3>
-          <p class="lead">Play your part. We did ours</p> --}} -->
+  <div id="demo" class="carousel slide" data-ride="carousel">
+
+    <!-- Indicators -->
+    <ul class="carousel-indicators">
+      <li data-target="#demo" data-slide-to="0" class="active"></li>
+      <li data-target="#demo" data-slide-to="1"></li>
+      <li data-target="#demo" data-slide-to="2"></li>
+      <li data-target="#demo" data-slide-to="3"></li>
+    </ul>
+  
+    <!-- The slideshow -->
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img class="sliderimage" src="{{asset('/images/local/slider.jpg')}}" alt="no image">
+        <div class="carousel-caption">
+          <h3>Welcome To NepCrypt</h3>
+          <p>Get familiar with Network Security</p>
+          @if (Route::has('login'))
+          @auth
+          
+          @else
+          <a href="/login"><button class="btn btn-info">Get Started</button></a>
+          @endauth
+          @endif
         </div>
       </div>
-      <!-- Slide Two - Set the background image for this slide in the line below -->
-      @foreach ($post as $item)
-  
-  
-      <div class="carousel-item" style="height:250px">
-        <img style="width: 100%;height:100%" src="{{asset('images/posts/'.$item['image'])}}">
-        <div class="carousel-caption d-none d-md-block slider-text">
-          <h3 class="display-4">{{$item->title}}</h3>
-          <p class="lead">wertyui</p>
+      <div class="carousel-item">
+        <img class="sliderimage" src="{{asset('/images/local/slider.jpg')}}" alt="no image">
+        <div class="carousel-caption">
+          <h3>Get Knowledge</h3>
+          <p>Read blogs from writers to get knowledge about network security</p>
+          @if (Route::has('login'))
+          @auth
+          
+          @else
+          <a href="/login"><button class="btn btn-info">Get Started</button></a>
+          @endauth
+          @endif
         </div>
       </div>
-      @endforeach
+      <div class="carousel-item">
+        <img class="sliderimage" src="{{asset('/images/local/slider.jpg')}}" alt="no image">
+        <div class="carousel-caption">
+          <h3>Share Knowledge</h3>
+          <p>Be a blogger and post the knoledge you have</p>
+          @if (Route::has('login'))
+          @auth
+          
+          @else
+          <a href="/login"><button class="btn btn-info">Get Started</button></a>
+          @endauth
+          @endif
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img class="sliderimage" src="{{asset('/images/local/slider.jpg')}}" alt="no image">
+        <div class="carousel-caption">
+          <h3>Clear your doubts</h3>
+          <p>Interact with writers and other users on the topic</p>
+          @if (Route::has('login'))
+          @auth
+          
+          @else
+          <a href="/login"><button class="btn btn-info">Get Started</button></a>
+          @endauth
+          @endif
+        </div>
+      </div>
     </div>
-    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
-        </a>
-    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
-        </a>
+  
+    <!-- Left and right controls -->
+    <a class="carousel-control-prev" href="#demo" data-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#demo" data-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </a>
+  
   </div>
+    
   </div>
 @endsection

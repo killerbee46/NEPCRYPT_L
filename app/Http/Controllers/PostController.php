@@ -82,10 +82,10 @@ class PostController extends Controller
 
         if($post){
             //Redirect with Flash message
-            return redirect('admin/post/')->with('status', 'Post added Successfully!');
+            return redirect('admin/posts')->with('status', 'Post added Successfully!');
         }
         else{
-            return redirect('admin/post/add-post')->with('status', 'There was an error!');
+            return redirect('admin/posts/add-post')->with('status', 'There was an error!');
         }
 
     }
@@ -156,10 +156,10 @@ class PostController extends Controller
         $posts->user_name = $request -> user_name;
 
         if($posts->save()){
-            return redirect('admin/post')->with('status', 'Post edited Successfully!');
+            return redirect('admin/posts')->with('status', 'Post edited Successfully!');
         }
         else{
-            return redirect('admin/post/edit-post')->with('status', 'There was an error');
+            return redirect('admin/posts/edit-post')->with('status', 'There was an error');
 
         }
         //

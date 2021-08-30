@@ -6,13 +6,11 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>NEPCRYPT</title>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
-    <script src='main.js'></script>
-    
-
     <style>
         .navbar{
             position: fixed;
@@ -48,40 +46,38 @@
         body{
             position:absolute;
             top: 10vh;
-            background-image:url("{{asset('/images/bg.png')}}");
+            background-color: black;
             background-size: cover;
             background-repeat: fixed;
             max-height: 100vh;
         }
-        .carousel-item {
-  height: 100vh;
-  min-height: 350px;
-  background: no-repeat center center scroll;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+        .instruction{
+            font-size: 1.5em;
+            color: aliceblue;
+            font-weight: 600;
+        }
+        .carousel-caption{
+            position: absolute;
+            top: 25vh;
+            right: -5vw;
+        }
+        .carousel-caption h3{
+            font-size: 3em;
+        }
+        .carousel-caption p{
+            font-size: 1.3em;
+        }
+a.dropdown-item{
+    color: black;
 }
-        .timer_box{
-    margin: 35px 50px;
-    display: inline-block;
-    padding: 20px 12px 0px 12px;
-    text-align: center;
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    border: 4px solid rgba(255, 255, 255, .6);
-    background-color: rgba(228, 177, 115, 0.589);
+.carousel-inner{
+    height: 93.1vh;
+    width: 100vw;
 }
-.timer_box h1{
-    font-size: 70px;
-    margin-top: 5px;
-    margin-bottom: 0px;
-    font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
-    color: white;
+.sliderimage{
+    width: 98.6vw;
 }
-.timer_box p{ margin-top: 0; font-size: 30px;}
-    </style>
+ </style>
 </head>
 
 <body>
@@ -96,50 +92,52 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto topnav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/') }}">Home</a>
+                    <a class="nav-link" href="{{ url('/') }}" style="color: aliceblue">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/post') }}">Posts</a>
+                    <a class="nav-link" href="{{ url('/post') }}" style="color: aliceblue">Posts</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/crypto') }}">En/De-Crypt</a>
+                    <a class="nav-link" href="{{ url('/crypto') }}" style="color: aliceblue">En/De-Crypt</a>
                 </li>
 
-                @if (Route::has('login'))
+                <li>
+                    @if (Route::has('login'))
                 @auth
-                    @if(Auth::user()->role == 3)
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/admin') }}" class="text-sm text-gray-700 underline"
-                            style='padding: .5em;margin-right: .5em;background-color: rgb(1, 129, 172); color: rgb(255, 255, 255);'>Admin
-                            Control</a>
-                    </li>
-
-                    @endif
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/logout') }}" class="text-sm text-gray-700 underline"
-                            style='padding: .5em;background-color: rgb(255, 55, 55); color: rgb(255, 255, 255);'>Logout</a>
-                    </li>
+                    <div class="dropdown">
+                        <button class="btn dropdown-toggle" style="color: aliceblue;background-color: black;" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <img src="{{asset('/images/users/image.png')}}" height="30px" width="30px" style="border-radius: 50%;border: 1px solid rgb(92, 92, 92);overflow: hidden;margin-right: 10px;"> {{ Auth::user()->name }}
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            @if(Auth::user()->role == 3)
+                            <a class="dropdown-item" href="{{ url('/admin') }}">Admin Control</a>
+                            @endif
+                          <a class="dropdown-item" href="{{ url('/admin/profile') }}">Profile</a>
+                          <a class="dropdown-item" href="{{ url('/logout') }}">Logout</a>
+                        </div>
+                      </div>
                 @else
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('login') }}" class="text-sm text-gray-700 underline"
-                        style='padding: .5em;margin-right: .5em;background-color: rgb(1, 129, 172); color: rgb(255, 255, 255);'>Log
-                        in</a>
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle" style="color: aliceblue;background-color: black;" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     Login
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        
+                      <a class="dropdown-item" href="{{ url('/login') }}">Login</a>
+                      <a class="dropdown-item" href="{{ url('/register') }}">Register</a>
+                    </div>
+                  </div>
+                  @endauth
+                  @endif
                 </li>
-
-                @if (Route::has('register'))
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 underline"
-                        style='padding: .5em;margin-right: .5em;background-color: rgb(47, 161, 255); color: rgb(255, 255, 255);'>Register</a>
-                </li>
-                @endif
-                
-                @endauth
-                @endif
             </ul>
         </div>
     </nav>
 </div>
+<div>
     @yield('body')
+</div>
+    
 
 </body>
 

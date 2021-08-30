@@ -22,6 +22,21 @@
                 <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
             </div>
 
+            <!-- Contact -->
+            <div>
+              <x-label for="mobile" :value="__('Moblie')" />
+
+              <x-input id="contact" class="block mt-1 w-full" maxlength="10" minlength="10" type="text" name="mobile" :value="old('mobile')"  />
+          </div>
+
+          <!-- role -->
+
+          <div>
+            <x-label for="role" :value="__('Role')" />
+            User <x-input id="role" class=" mt-1" type="radio" name="role" :value="1" checked />
+            Blogger <x-input id="role" class=" mt-1" type="radio" name="role" :value="2"  />
+        </div>
+
             <!-- Password -->
             <div class="mt-4">
                 <x-label for="password" :value="__('Password')" />

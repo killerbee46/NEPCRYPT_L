@@ -129,6 +129,7 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required',
         ]
+
         );
 
         $user = User::findOrFail($id);
@@ -137,6 +138,22 @@ class UserController extends Controller
         $user->mobile = $request->mobile;
         $user->role = $request->role;
         $user->status = $request->status;
+        if ($file = $request->file('profile_pic')) {
+
+            $request->validate([
+                'profile_pic' =>'mimes:jpg,png,bmp',
+            ]);
+            $image = $request->file('profile_pic');
+            $imgExt = $image->getClientOriginalExtension();
+            $fullname = time().".".$imgExt;
+            $result = $image->storeAs('images/users',$fullname);
+
+    }
+    else{
+        $fullname = "image.png";
+    }
+        $user->profile_pic = $fullname;
+
 
         if ($user->save()) {
            

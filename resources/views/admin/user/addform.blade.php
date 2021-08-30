@@ -1,19 +1,19 @@
-@extends('admin.adminmaster')
+@extends('admin.master')
 @section('content')
-<div class="container" style="color: aliceblue;">
+<div class="container">
 
       <form method="POST" 
       action="{{url('admin/users/add-user/')}}" enctype="multipart/form-data">
           @csrf
           <div class="field">
-            <label class="label" style="color: aliceblue;">Name</label>
+            <label class="label">Name</label>
             <div class="control">
               <input class="input" type="text" placeholder="Text input" name ="name">
             </div>
           </div>
 
       <div class="field">
-        <label class="label" style="color: aliceblue;">Email</label>
+        <label class="label">Email</label>
         <div class="control has-icons-left has-icons-right">
           <input class="input is-danger" type="email" placeholder="Email input" value="" name="email">
           <span class="icon is-small is-left">

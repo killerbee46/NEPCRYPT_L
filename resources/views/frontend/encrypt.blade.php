@@ -1,33 +1,48 @@
 @extends('frontend.encro')
 @section('crypto')
 
-<script src="aes.js"></script>
-<script> 
-    function encrypt(){
+<script src="../../essential/aes.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"
+    integrity="sha256-/H4YS+7aYb9kJ5OKhFYPUjSJdrtV6AeyJOtTkw6X72o=" crossorigin="anonymous"></script>
+<script>
+    function encrypt() {
+        var enckey = document.getElementById('enckey').value;
         var ptext = document.getElementById('plain').value;
-        // Encrypt
-        var ciphertext = CryptoJS.AES.encrypt(ptext, 1234);
-        document.getElementById('encoded').value = ciphertext;
+        var encrypted = CryptoJS.AES.encrypt(ptext, enckey);
+        document.getElementById('encoded').value = encrypted;
     }
+
+
 </script>
-<div class="encrypt" style="text-align: center; padding-top: 10px;">
-    <div style="background-color: black;color: chartreuse; font-size: 1.5em;margin-left: 5%;margin-right: 5%;">
-        Enter your messages here...
+<div class="row">
+    <div class="col-md-6">
+        <div class="instruction">
+            Enter your messages here...
+        </div>
+        <!-- <form action="/encrypt" method="POST">
+                <div>
+                    <textarea class="plain" id='plain' style="width: 100%;height:60vh"></textarea>
+                </div>
+                <button type="submit" class="btn btn-warning">Enrypt</button>
+            </form> -->
+        <div>
+            <textarea class="plain" id='plain' style="width: 100%;height:60vh"></textarea>
+        </div>
+        <span style="color: aliceblue;">Enter Key here:</span>
+            <input type="text" name='enckey' id='enckey'>
+        <button onclick="encrypt()" class="btn btn-warning">Enrypt</button>
     </div>
-    <div>
-        <textarea style="height: 28vh;width: 90%;background-color: black;color: chartreuse; font-size: 1.3em;" class="plain" id='plain'></textarea>
+    <div class="col-md-6">
+        <div class="instruction">
+            See your result here...
+        </div>
+        <div>
+            <Textarea class="encoded" id='encoded' style="width: 100%;height:60vh"></Textarea>
+        </div>
     </div>
-    <div style=" margin-bottom: 10px;font-size: 2em;">
-        <button class="btn btn-success" onclick="encrypt()">ENCRYPT</button>
-    </div>
-    <div style="background-color: black;color: crimson; font-size: 1.5em;margin-left: 5%;margin-right: 5%;">
-        See your result here...
-    </div>
-    <div>
-        <Textarea style="height: 28vh;width:90%;background-color: black;color: crimson; font-size: 1.3em;" class="encoded" id='encoded'></Textarea>
-    </div>
-    
-    
+</div>
+
+
 </div>
 
 

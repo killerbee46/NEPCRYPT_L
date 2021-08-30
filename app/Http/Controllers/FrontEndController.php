@@ -13,10 +13,7 @@ use Illuminate\Support\Facades\Auth;
 class FrontEndController extends Controller
 {
     public function index(Request $request){
-
-        $post= Post::orderBy('id','desc')->get();
-        $postcount = count($post);
-        return view('frontend.home',compact('post'));
+        return view('frontend.home');
 	 
        }
    
@@ -84,13 +81,11 @@ class FrontEndController extends Controller
     public function deletecomment(Request $request ,$id)
     {
         $comment = Comment::findOrFail($id);
-        dd($comment);
-        $result = $comment->save();
-
-        $comment= Comment::orderBy('id','desc')->where('status',1)->get();
-        if ($result) {
-        	return redirect('/post/show/'.$id);
+        $comment->post_id = $postid;
+        if($comment->delete()){
+            return redirect('/post/show/'.$postid)->with('status', 'comment deleted successfully');
         }
+        else return redirect('/post/show/'.$postid)->with('status', 'There was an error');
     }
 
     public function addPost()
@@ -151,6 +146,15 @@ class FrontEndController extends Controller
         }
 
 
+    }
+    public function deletepost(Request $request ,$id)
+    {
+        $post = Post::findOrFail($id);
+        $comments = Comment::all()->where('post_id',$id);
+        if($post->delete() && $comments->delete()){
+            return redirect('/post')->with('status', 'Post deleted successfully');
+        }
+        else return redirect('/post/show/'.$id)->with('status', 'There was an error');
     }
 
 }

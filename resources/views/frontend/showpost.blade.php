@@ -1,8 +1,12 @@
+@php
+use Illuminate\Support\Facades\Auth;
+$user = auth()->user();
+@endphp
 @extends('frontend.template')
 
 @section('body')
 
-<div style="background-color: rgba(0, 0, 0, 0.514);margin-top: -20px;">
+<div style="background-color: rgba(0, 0, 0, 0.514);margin-top: -20px;padding: 0;">
 <h3 style="color: aliceblue;margin-top: 10px; text-align: center;margin-top: 25px;">{{$post->title}}</h3><span style="color: aliceblue;position: absolute;right: 30px;top: 20px;font-size: 1.1em;">-{{$post->user_name}}</span> 
 <div style="padding: 40px;text-align: center;display: flex;width: 98vw;" id="product">
     <div style="width: 50%;">
@@ -14,7 +18,16 @@
     </div>
 </div>
 
-    @auth
+@if($user==NULL)
+<div></div>
+@else
+    @if(($user->id)==($post->user_id))
+    <a href="{{url('/deletepost/'.$post->id)}}" class="btn btn-default"><button type="button" class="btn btn-danger">Delete</button></a>
+
+    @endif
+@endif
+
+@auth
     <div style="background-color: black; width: 100vw;padding-bottom: 20px;">
         
     <form method="POST" action="{{url('post/comment/'.$post->id)}}">
@@ -45,8 +58,14 @@
                                         <h6 class="font-medium">{{$comment->user_name}}</h6>
                                          <span class="m-b-15 d-block">{{$comment->comment}}</span>
                                         <div class="comment-footer"> <span class="text-muted float-right">{{$comment->created_at}}</span> 
-                                        <button type="button" class="btn btn-cyan btn-sm">Edit</button> 
-                                        <a href="{{url('/delete-comment/'.$comment->id)}}" class="btn btn-default">Delete</a>
+                                            @if($user==NULL)
+<div></div>
+@else
+    @if(($comment->user_id)==($user->id))
+    <a href="{{url('/deletecomment/'.$comment->id)}}" class="btn btn-default"><button type="button" class="btn btn-danger">Delete</button></a>
+
+    @endif
+@endif
                                          </div>
                                     </div>
                                 </div> <!-- Comment Row -->

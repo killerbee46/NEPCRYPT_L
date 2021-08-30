@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use phpseclib\Crypt\RSA as Crypt_RSA;
 
 class EncryptController extends Controller
 {
@@ -13,4 +14,13 @@ class EncryptController extends Controller
         return view('frontend.home',compact('post'));
 	 
        }
+
+      public function encrypt(){
+        $rsa = new Crypt_RSA();
+        $rsa->loadKey($publickey);
+        $rsa->setEncryptionMode(2);
+        $data = $request->ptext;
+        $output = $rsa->encrypt($data);
+        $decrypted = base64_encode($output);
+      }
 }

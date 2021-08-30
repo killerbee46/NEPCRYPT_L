@@ -1,60 +1,53 @@
-@extends('admin.adminmaster')
+@extends('admin.master')
 @section('content')
-<div class="container">
-        @if (session('error'))
-            <div class="alert alert-danger">
-                {{ session('errors') }}
+@if (session('status'))
+    <div class="alert alert-success">
+        {{ session('status') }}
+    </div>
+@endif
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="white-box">
+                            <h3 class="box-title">Posts</h3>
+                            <div class="table-responsive">
+                                <table class="table text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th class="border-top-0">ID</th>
+                                            <th class="border-top-0">Title</th>
+                                            <th class="border-top-0">Image</th>
+                                            <th colspan="3" class="border-top-0">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($posts as $post )
+                                        <tr>
+                                            <td>{{$post->id}}</td>
+                                            <td>{{$post->title}}</td>
+                                            <td>{{$post->image}}</td>
+                                            <td style="width: 40px;"><a href="/userstable/{{$post->id}}/edit"><button class="btn btn-info">Edit</button></a></td>
+                                            <form method="POST" action="/userstable/{{$post->id}}">
+                                                @csrf
+                                                @method('delete')
+                                                <td><input class="btn btn-danger" type="submit" value="Delete"></td>
+                                                </form>
+                                        </tr>
+                                       @endforeach
+                                    </tbody>
+                                </table>
+                                <a href="/admin/posts/add-post" class="btn btn-primary" >Create Post</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+           
             </div>
-        @endif
-
-        @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
-
-        <form style="float: right;" method="POST" 
-          action="{{url('admin/post/search-post/')}}" >
-              @csrf
-                  <input class="input is-normal" type="text" placeholder="Search Posts" style="width: 300px; " name="searched">
-                  <button class="btn btn-primary" >Search</button>
-
-        </form>
-        <div class="buttons" style="float: right;">
-
-            <a href="{{url('admin/post/add-post')}}" style="margin-right: 3px;" class="button is-primary">Add Post</a>
-
+          
         </div>
-         <h2 style="color:chartreuse">Posts</h2>
-
-
-         <table border="1px" class="table">
-             <tr>
-                 <th>Title</th>
-                 <th>Image</th>
-                 <th>Action</th>
-
-             </tr>
-
-             @foreach($posts as $post)
-                <tr>
-                    <td>{{$post->title}}</td>
-                    <td>{{$post->profile_pic}}</td>
-                    <td>
-                        
-                        <form method="post" action="{{url('admin/post/delete-post/'.$post->id)}}"  >
-                            <a href="{{url('admin/post/edit-post/'.$post->id)}}" class="btn btn-primary">Edit </a>
-                            @csrf
-                            <button class="btn btn-danger" >Delete </button>
-                        </form>
-
-                    </td>
-                   
-                </tr>
-             @endforeach
-
-
-         </table>
-        <!--  <p>Red background </p> -->
-</div>
- @stop
+        
+    </div>
+   @endsection

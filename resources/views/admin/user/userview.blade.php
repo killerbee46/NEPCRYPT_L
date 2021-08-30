@@ -31,8 +31,8 @@
                                             <td>{{$post->name}}</td>
                                             <td>{{$post->email}}</td>
                                             <td><?php if($post['role']=='3'){echo "Admin";} else if($post['role']=="2") {echo "Blogger";} else {echo "User";}?></td>
-                                            <td style="width: 40px;"><a href="/userstable/{{$post->id}}/edit"><button class="btn btn-info">Edit</button></a></td>
-                                            <form method="POST" action="/userstable/{{$post->id}}">
+                                            <td style="width: 40px;"><a href="/admin/users/edit-user/{{$post->id}}"><button class="btn btn-info">Edit</button></a></td>
+                                            <form method="POST" action="/users/delete-user/{{$post->id}}">
                                                 @csrf
                                                 @method('delete')
                                                 <td><input class="btn btn-danger" type="submit" value="Delete"></td>
@@ -41,7 +41,7 @@
                                        @endforeach
                                     </tbody>
                                 </table>
-                                <a href="/userstable/create" class="btn btn-primary" >Create User</a>
+                                <!-- <a href="/admin/users/add-user" class="btn btn-primary" >Create User</a> -->
                             </div>
                         </div>
                     </div>

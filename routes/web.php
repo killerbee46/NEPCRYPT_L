@@ -25,6 +25,7 @@ Route::post('/post',[FrontendController::class, 'addNewPost']);
 Route::get('/post/show/{id}', [FrontendController::class, 'viewPost']);
 Route::post('/post/comment/{id}',[FrontendController::class, 'comment']);
 Route::post('/post/delete-comment/{id}',[FrontendController::class, 'deletecomment']);
+Route::get('/deletepost/{id}',[FrontendController::class, 'deletepost']);
 Route::get('/crypto', [FrontendController::class, 'encrypt']);
 Route::get('/crypto/encrypt', [FrontendController::class, 'encrypt']);
 Route::get('/crypto/decrypt', [FrontendController::class, 'decrypt']);
